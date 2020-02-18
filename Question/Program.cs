@@ -9,47 +9,102 @@ namespace Question
         static List<int> a;
         static void Main(string[] args)
         {
-            for (int i1 = 1; i1 < 5; i1++)
+            //for (int i1 = 1; i1 < 5; i1++)
+            //    for (int i2 = 1; i2 < 5; i2++)
+            //        for (int i3 = 1; i3 < 5; i3++)
+            //            for (int i4 = 1; i4 < 5; i4++)
+            //                for (int i5 = 1; i5 < 5; i5++)
+            //                    for (int i6 = 1; i6 < 5; i6++)
+            //                        for (int i7 = 1; i7 < 5; i7++)
+            //                            for (int i8 = 1; i8 < 5; i8++)
+            //                                for (int i9 = 1; i9 < 5; i9++)
+            //                                    for (int i10 = 1; i10 < 5; i10++)
+            //                                    {
+            //                                        a = new List<int> { 0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10 };
+            //                                        var test = Q2() && Q3() && Q4() && Q5() && Q6() && Q7() && Q8() && Q9() && Q10();
+            //                                        if (test)
+            //                                        {
+            //                                            a.RemoveAt(0);
+            //                                            Console.WriteLine(string.Join(',', a)
+            //                                                .Replace("1", "A")
+            //                                                .Replace("2", "B")
+            //                                                .Replace("3", "C")
+            //                                                .Replace("4", "D"));
+            //                                        }
+            //                                    }
+
+            var ranges = Enumerable.Repeat(Enumerable.Range(1, 4), 10);
+            IEnumerable<IEnumerable<int>> ret = new[] { Enumerable.Empty<int>() };
+            foreach (var item in ranges)
             {
-                for (int i2 = 1; i2 < 5; i2++)
+                ret = from a in ret from b in item select a.Concat(new[] { b });
+            }
+
+            foreach (var i in ret)
+            {
+                a = i.Prepend(0).ToList();
+                var test = Q2() && Q3() && Q4() && Q5() && Q6() && Q7() && Q8() && Q9() && Q10();
+                if (test)
                 {
-                    for (int i3 = 1; i3 < 5; i3++)
-                    {
-                        for (int i4 = 1; i4 < 5; i4++)
-                        {
-                            for (int i5 = 1; i5 < 5; i5++)
-                            {
-                                for (int i6 = 1; i6 < 5; i6++)
-                                {
-                                    for (int i7 = 1; i7 < 5; i7++)
-                                    {
-                                        for (int i8 = 1; i8 < 5; i8++)
-                                        {
-                                            for (int i9 = 1; i9 < 5; i9++)
-                                            {
-                                                for (int i10 = 1; i10 < 5; i10++)
-                                                {
-                                                    a = new List<int> { 0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10 };
-                                                    var test = Q2() && Q3() && Q4() && Q5() && Q6() && Q7() && Q8() && Q9() && Q10();
-                                                    if (test)
-                                                    {
-                                                        a.RemoveAt(0);
-                                                        Console.WriteLine(string.Join(',', a)
-                                                            .Replace("1", "A")
-                                                            .Replace("2", "B")
-                                                            .Replace("3", "C")
-                                                            .Replace("4", "D"));
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    a.RemoveAt(0);
+                    Console.WriteLine(string.Join(',', a)
+                        .Replace("1", "A")
+                        .Replace("2", "B")
+                        .Replace("3", "C")
+                        .Replace("4", "D"));
                 }
             }
+
+            //foreach (var i1 in range) 
+            //    foreach (var i2 in range) 
+            //        foreach (var i3 in range) 
+            //            foreach (var i4 in range)
+            //                foreach (var i5 in range)
+            //                    foreach (var i6 in range) 
+            //                        foreach (var i7 in range)
+            //                            foreach (var i8 in range) 
+            //                                foreach (var i9 in range)
+            //                                    foreach (var i10 in range)
+            //                                    {
+            //                                        a = new List<int> { 0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10 };
+            //                                        var test = Q2() && Q3() && Q4() && Q5() && Q6() && Q7() && Q8() && Q9() && Q10();
+            //                                        if (test)
+            //                                        {
+            //                                            a.RemoveAt(0);
+            //                                            Console.WriteLine(string.Join(',', a)
+            //                                                .Replace("1", "A")
+            //                                                .Replace("2", "B")
+            //                                                .Replace("3", "C")
+            //                                                .Replace("4", "D"));
+            //                                        }
+            //                                    }
+
+            //var range = Enumerable.Range(1, 4);
+            //var result = from d1 in range
+            //             from d2 in range
+            //             from d3 in range
+            //             from d4 in range
+            //             from d5 in range
+            //             from d6 in range
+            //             from d7 in range
+            //             from d8 in range
+            //             from d9 in range
+            //             from d10 in range
+            //             select new { d1, d2, d3, d4, d5, d6, d7, d8, d9, d10 };
+            //foreach (var i in result)
+            //{
+            //    a = new List<int> { 0, i.d1, i.d2, i.d3, i.d4, i.d5, i.d6, i.d7, i.d8, i.d9, i.d10 };
+            //    var test = Q2() && Q3() && Q4() && Q5() && Q6() && Q7() && Q8() && Q9() && Q10();
+            //    if (test)
+            //    {
+            //        a.RemoveAt(0);
+            //        Console.WriteLine(string.Join(',', i)
+            //            .Replace("1", "A")
+            //            .Replace("2", "B")
+            //            .Replace("3", "C")
+            //            .Replace("4", "D"));
+            //    }
+            //}
 
             Console.WriteLine("end");
             Console.ReadLine();
@@ -107,10 +162,10 @@ namespace Question
         }
         static bool Q8()
         {
-            if (a[8] == 1) return Math.Abs(a[1]-a[7]) > 1;
-            if (a[8] == 2) return Math.Abs(a[1]-a[5]) > 1;
-            if (a[8] == 3) return Math.Abs(a[1]-a[2]) > 1;
-            if (a[8] == 4) return Math.Abs(a[1]-a[10]) > 1;
+            if (a[8] == 1) return Math.Abs(a[1] - a[7]) > 1;
+            if (a[8] == 2) return Math.Abs(a[1] - a[5]) > 1;
+            if (a[8] == 3) return Math.Abs(a[1] - a[2]) > 1;
+            if (a[8] == 4) return Math.Abs(a[1] - a[10]) > 1;
             return false;
         }
         static bool Q9()
@@ -137,5 +192,5 @@ namespace Question
         }
     }
 
-   
+
 }
