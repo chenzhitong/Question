@@ -1,46 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Question
 {
     class Program
     {
-        static List<int> a;
         static void Main(string[] args)
         {
-            //for (int i1 = 1; i1 < 5; i1++)
-            //    for (int i2 = 1; i2 < 5; i2++)
-            //        for (int i3 = 1; i3 < 5; i3++)
-            //            for (int i4 = 1; i4 < 5; i4++)
-            //                for (int i5 = 1; i5 < 5; i5++)
-            //                    for (int i6 = 1; i6 < 5; i6++)
-            //                        for (int i7 = 1; i7 < 5; i7++)
-            //                            for (int i8 = 1; i8 < 5; i8++)
-            //                                for (int i9 = 1; i9 < 5; i9++)
-            //                                    for (int i10 = 1; i10 < 5; i10++)
-            //                                    {
-            //                                        a = new List<int> { 0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10 };
-            //                                        var test = Q2() && Q3() && Q4() && Q5() && Q6() && Q7() && Q8() && Q9() && Q10();
-            //                                        if (test)
-            //                                        {
-            //                                            a.RemoveAt(0);
-            //                                            Console.WriteLine(string.Join(',', a)
-            //                                                .Replace("1", "A")
-            //                                                .Replace("2", "B")
-            //                                                .Replace("3", "C")
-            //                                                .Replace("4", "D"));
-            //                                        }
-            //                                    }
-
             IEnumerable<IEnumerable<int>> ret = new[] { Enumerable.Empty<int>() };
             for (int i = 0; i < 10; i++)
                 ret = from a in ret from b in Enumerable.Range(1, 4) select a.Concat(new[] { b });
 
-            foreach (var i in ret)
+            Parallel.ForEach(ret, i =>
             {
-                a = i.Prepend(0).ToList();
-                var test = Q2() && Q3() && Q4() && Q5() && Q6() && Q7() && Q8() && Q9() && Q10();
+                var a = i.Prepend(0).ToList();
+                var test = Q2(a) && Q3(a) && Q4(a) && Q5(a) && Q6(a) && Q7(a) && Q8(a) && Q9(a) && Q10(a);
                 if (test)
                 {
                     a.RemoveAt(0);
@@ -50,63 +26,12 @@ namespace Question
                         .Replace("3", "C")
                         .Replace("4", "D"));
                 }
-            }
-
-            //foreach (var i1 in range) 
-            //    foreach (var i2 in range) 
-            //        foreach (var i3 in range) 
-            //            foreach (var i4 in range)
-            //                foreach (var i5 in range)
-            //                    foreach (var i6 in range) 
-            //                        foreach (var i7 in range)
-            //                            foreach (var i8 in range) 
-            //                                foreach (var i9 in range)
-            //                                    foreach (var i10 in range)
-            //                                    {
-            //                                        a = new List<int> { 0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10 };
-            //                                        var test = Q2() && Q3() && Q4() && Q5() && Q6() && Q7() && Q8() && Q9() && Q10();
-            //                                        if (test)
-            //                                        {
-            //                                            a.RemoveAt(0);
-            //                                            Console.WriteLine(string.Join(',', a)
-            //                                                .Replace("1", "A")
-            //                                                .Replace("2", "B")
-            //                                                .Replace("3", "C")
-            //                                                .Replace("4", "D"));
-            //                                        }
-            //                                    }
-
-            //var range = Enumerable.Range(1, 4);
-            //var result = from d1 in range
-            //             from d2 in range
-            //             from d3 in range
-            //             from d4 in range
-            //             from d5 in range
-            //             from d6 in range
-            //             from d7 in range
-            //             from d8 in range
-            //             from d9 in range
-            //             from d10 in range
-            //             select new { d1, d2, d3, d4, d5, d6, d7, d8, d9, d10 };
-            //foreach (var i in result)
-            //{
-            //    a = new List<int> { 0, i.d1, i.d2, i.d3, i.d4, i.d5, i.d6, i.d7, i.d8, i.d9, i.d10 };
-            //    var test = Q2() && Q3() && Q4() && Q5() && Q6() && Q7() && Q8() && Q9() && Q10();
-            //    if (test)
-            //    {
-            //        a.RemoveAt(0);
-            //        Console.WriteLine(string.Join(',', i)
-            //            .Replace("1", "A")
-            //            .Replace("2", "B")
-            //            .Replace("3", "C")
-            //            .Replace("4", "D"));
-            //    }
-            //}
+            });
 
             Console.WriteLine("end");
             Console.ReadLine();
         }
-        static bool Q2()
+        static bool Q2(List<int> a)
         {
             if (a[2] == 1) return a[5] == 3;
             if (a[2] == 2) return a[5] == 4;
@@ -115,7 +40,7 @@ namespace Question
             return false;
         }
 
-        static bool Q3()
+        static bool Q3(List<int> a)
         {
             if (a[3] == 1) return a[3] != a[6] && a[6] == a[2] && a[2] == a[4];
             if (a[3] == 2) return a[6] != a[3] && a[3] == a[2] && a[2] == a[4];
@@ -123,7 +48,7 @@ namespace Question
             if (a[3] == 4) return a[4] != a[3] && a[3] == a[6] && a[6] == a[2];
             return false;
         }
-        static bool Q4()
+        static bool Q4(List<int> a)
         {
             if (a[4] == 1) return a[1] == a[5];
             if (a[4] == 2) return a[2] == a[7];
@@ -131,7 +56,7 @@ namespace Question
             if (a[4] == 4) return a[6] == a[10];
             return false;
         }
-        static bool Q5()
+        static bool Q5(List<int> a)
         {
             if (a[5] == 1) return a[5] == a[8];
             if (a[5] == 2) return a[5] == a[4];
@@ -139,7 +64,7 @@ namespace Question
             if (a[5] == 4) return a[5] == a[7];
             return false;
         }
-        static bool Q6()
+        static bool Q6(List<int> a)
         {
             if (a[6] == 1) return a[8] == a[2] && a[8] == a[4];
             if (a[6] == 2) return a[8] == a[1] && a[8] == a[6];
@@ -147,7 +72,7 @@ namespace Question
             if (a[6] == 4) return a[8] == a[5] && a[8] == a[9];
             return false;
         }
-        static bool Q7()
+        static bool Q7(List<int> a)
         {
             var min = a.GroupBy(p => p).OrderBy(p => p.Count()).Skip(1).First().Key;
 
@@ -157,7 +82,7 @@ namespace Question
             if (a[7] == 4) return min == 4;
             return false;
         }
-        static bool Q8()
+        static bool Q8(List<int> a)
         {
             if (a[8] == 1) return Math.Abs(a[1] - a[7]) > 1;
             if (a[8] == 2) return Math.Abs(a[1] - a[5]) > 1;
@@ -165,7 +90,7 @@ namespace Question
             if (a[8] == 4) return Math.Abs(a[1] - a[10]) > 1;
             return false;
         }
-        static bool Q9()
+        static bool Q9(List<int> a)
         {
             var result = a[1] == a[6];
             if (a[9] == 1) return (a[6] == a[5]) != result;
@@ -174,7 +99,7 @@ namespace Question
             if (a[9] == 3) return (a[9] == a[5]) != result;
             return false;
         }
-        static bool Q10()
+        static bool Q10(List<int> a)
         {
             var min = a.GroupBy(p => p).OrderBy(p => p.Count()).Skip(1).First().Key;
             var max = a.GroupBy(p => p).OrderByDescending(p => p.Count()).First().Key;
