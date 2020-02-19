@@ -33,12 +33,9 @@ namespace Question
             //                                        }
             //                                    }
 
-            var ranges = Enumerable.Repeat(Enumerable.Range(1, 4), 10);
             IEnumerable<IEnumerable<int>> ret = new[] { Enumerable.Empty<int>() };
-            foreach (var item in ranges)
-            {
-                ret = from a in ret from b in item select a.Concat(new[] { b });
-            }
+            for (int i = 0; i < 10; i++)
+                ret = from a in ret from b in Enumerable.Range(1, 4) select a.Concat(new[] { b });
 
             foreach (var i in ret)
             {
